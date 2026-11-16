@@ -1,0 +1,626 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  10pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdftitle={Exact Nonreal-Root Counts for Maximal-Matching Polynomials of Equal-Cycle Bouquets},
+  pdfauthor={Ryutaro Yonezu},
+  pdfsubject={No.70 v1.0 unrefereed preprint; analytical proof candidate; novelty inconclusive},
+  pdfkeywords={maximal matchings, graph polynomials, equal-cycle bouquets, nonreal roots, interlacing},
+  pdfcreator={XeLaTeX}}
+
+\title{\Large\bfseries Exact Nonreal-Root Counts for Maximal-Matching Polynomials of Equal-Cycle Bouquets}
+\author{Ryutaro Yonezu\\\small Independent Researcher}
+\date{\small Research No.70 --- v1.0\\16 November 2026 --- Unrefereed preprint}
+\begin{document}
+\maketitle
+\begin{abstract}
+We study the polynomial enumerating inclusion-maximal matchings in a bouquet of equal-length cycles sharing one hub. For every integer \(q\ge5\) and \(r\ge1\), the proposed number of nonreal roots, counted with algebraic multiplicity, is \(2(\lfloor(q-1)/2\rfloor-\lfloor q/3\rfloor)\lfloor(r-1)/2\rfloor\). The manuscript presents an analytical proof candidate based on a three-residue interlacing induction and a rational-function root count, accompanied by finite exact checks. This preprint has received the AI reviews described below; it has not undergone human peer review or formal verification. Novelty assessment: inconclusive; full-text comparison with Burnham--Erey (2025) incomplete.
+\end{abstract}
+
+\textbf{Evidence statement.} The author reports separate AI review of v0.10 Sections 1--4, editorial-delta reviews of v0.11--v0.13, and mathematical-delta PASS for v0.14. The latter explicitly checks the corrected \(r=1\) pole-evaluation case and its connection to the remaining root-count argument. Sections 1--4 preserve the adopted v0.14 TeX source byte-for-byte. These attributed reviews are not human peer review or a formal proof certificate. Native Windows v0.12 finite reproduction was reported PASS (exit code 0); preparation separately repeated finite exact checks on Linux. No new native Windows v0.14 or v1.0 run is claimed.
+
+\textbf{Rights:} Copyright (c) 2026 Ryutaro Yonezu. All rights reserved.
+
+\subsection{1. Statement, normalization, and elementary
+cases}\label{statement-normalization-and-elementary-cases}
+
+Let \(q\ge5\), \(r\ge1\), and let \(\mathcal B_{q,r}\) be the bouquet of
+\(r\) cycles of length \(q\), identified at exactly one common vertex.
+Its \textbf{maximal-matching polynomial} is
+\(Z_{q,r}(x)=\sum_M x^{|M|}\), where the sum is over
+\emph{inclusion-maximal} matchings (not maximum-cardinality matchings).
+
+Put
+
+\[
+ F_0=F_1=1,\quad F_2=x,\qquad F_n=x(F_{n-2}+F_{n-3})\quad(n\ge3),
+\]
+
+For a path on \(n\ge3\) vertices, a maximal matching either uses its
+first edge \(12\) (contributing \(xF_{n-2}\)) or omits \(12\), in which
+case it must use \(23\) (contributing \(xF_{n-3}\)); this gives the
+recurrence and \(F_3=2x\). \[
+ m=\lfloor q/3\rfloor,\qquad
+ a=x^{2-m}F_{q-5},\quad b=2x^{1-m}F_{q-2},\quad c=x^{-m}F_{q-1},
+\] \[
+ d=\left\lfloor\frac{q-1}{2}\right\rfloor-\left\lfloor\frac q3\right\rfloor,
+ \qquad e=\begin{cases}1&q\text{ even},\\0&q\text{ odd}.\end{cases}
+\]
+
+Here \(a,b,c\) are \textbf{actual polynomials} (after cancellation of
+powers of \(x\)), with positive leading coefficients, and
+
+\[
+ Z_{q,r}(x)=x^{mr}P_{q,r}(x),\qquad
+ P_{q,r}(x)=a(x)^r+r\,b(x)c(x)^{r-1}.
+ \tag{1}
+\]
+
+\textbf{Rooted-petal decomposition (self-contained proof of (1)).} On
+each cycle label the hub by \(v\), with remaining vertices
+\(1,\ldots,q-1\) in cyclic order. Let \(F_n\) be the maximal-matching
+polynomial of the path with \(n\) vertices, with \(F_0=F_1=1\) (the
+empty matching of an edgeless path is maximal).
+
+If \(v\) is unmatched, for every petal both vertices adjacent to \(v\)
+must be matched by edges inside that petal; otherwise the corresponding
+edge incident with \(v\) could be added. Thus the two path-end edges
+\(12\) and \((q-2)(q-1)\) are forced. The remaining \(q-5\) vertices
+form a path whose matching must be maximal. The per-petal contribution
+is \[
+  S_q(x)=x^2 F_{q-5}(x).
+\] If \(v\) is matched, choose the unique petal containing its matching
+edge and one of the two incident edges within that petal (two choices).
+Removing that edge's two endpoints leaves a path with \(q-2\) vertices
+which must carry a maximal matching, so the matched petal contributes \[
+  E_q(x)=2xF_{q-2}(x).
+\] In each of the remaining \(r-1\) petals, hub edges are already
+blocked by the chosen edge. The \(q-1\) nonhub vertices therefore form
+an independently maximal-matched path, with contribution \[
+  T_q(x)=F_{q-1}(x).
+\] These cases are disjoint and exhaustive, including \(r=1\) and
+\(q=5\). Consequently \[
+Z_{q,r}=S_q^r+rE_qT_q^{r-1}
+=x^{mr}\bigl(a^r+rbc^{r-1}\bigr),
+\] by the definitions of \(a,b,c,m\) above. This is an elementary
+specialization of established rooted decomposition methods; \textbf{no
+general cut-vertex principle is claimed novel}. The degrees are
+\(\deg a=\deg c=d\), \(\deg b=d+e\), and \(\deg P_{q,r}=rd+e\), with no
+cancellation of leading terms. Because of positive coefficients,
+\(a,b,c\) have no positive zeros.
+
+\textbf{Candidate Theorem.} For every integer \(q\ge5\) and every
+\(r\ge1\), the number of nonreal roots of \(Z_{q,r}\), counted with
+algebraic multiplicity, is
+
+\[
+ \boxed{N_{\rm nonreal}(q,r)=2d\left\lfloor\frac{r-1}{2}\right\rfloor.}\tag{2}
+\]
+
+Consequently, \(Z_{q,r}\) is real-rooted iff \(r\le2\) or \(q=6\). The
+rest of this document presents an analytical proof \textbf{for
+independent scrutiny}, not a previously certified theorem.
+
+Small-parameter anchors (the case \(q=6\) is degenerate with \(d=0\)):
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+\(q\) & \(a\) & \(b\) & \(c\) & \((d,e)\) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+5 & \(x\) & \(4x\) & \(1+x\) & (1,0) \\
+6 & \(1\) & \(2(x+1)\) & \(3\) & (0,1) \\
+7 & \(x\) & \(6x\) & \(x+3\) & (1,0) \\
+8 & \(2x\) & \(2x(x+3)\) & \(4x+1\) & (1,1) \\
+\end{longtable}
+
+\subsection{2. Complete three-residue braid lemma, including endpoint
+signs}\label{complete-three-residue-braid-lemma-including-endpoint-signs}
+
+For \(k\ge0\) define
+
+\[
+ A_k=F_{3k}/x^k,\qquad B_k=F_{3k+1}/x^k,\qquad C_k=F_{3k+2}/x^{k+1}.
+\]
+
+From the \(F\)-recurrence:
+
+\[
+ A_{k+1}=A_k+B_k,\qquad B_{k+1}=B_k+xC_k,\qquad C_{k+1}=A_{k+1}+C_k,
+ \tag{3}
+\]
+
+with \(A_0=B_0=C_0=1\). All coefficients are nonnegative, and all
+\emph{nonzero coefficients} and leading coefficients are positive. From
+(3) the degrees are
+
+\begin{itemize}
+\tightlist
+\item
+  \(k=2s\): \(\deg A_k=\deg B_k=\deg C_k=s\);
+\item
+  \(k=2s+1\): \(\deg A_k=\deg C_k=s\) and \(\deg B_k=s+1\).
+\end{itemize}
+
+The reason no degree drops is that every sum in (3) adds polynomials
+with \textbf{positive leading coefficients}; in particular, \(B_k+xC_k\)
+does not cancel its top-degree term even if its summands have the same
+degree.
+
+\textbf{Braid lemma.} For every \(k\ge0\), every root of every
+nonconstant \(A_k,B_k,C_k\) is \emph{strictly negative, real and
+simple}. With increasing roots \(a_i,b_i,c_i\) at the same level:
+
+\begin{itemize}
+\tightlist
+\item
+  if \(k=2s\ge2\): \(c_1<a_1<b_1<c_2<a_2<b_2<\cdots<c_s<a_s<b_s<0\);
+\item
+  if \(k=2s+1\):
+  \(b_1<c_1<a_1<b_2<c_2<a_2<\cdots<b_s<c_s<a_s<b_{s+1}<0\).
+\end{itemize}
+
+For \(s=0\), the odd chain means only \(b_1<0\);
+\(A_1=2,B_1=1+x,C_1=3\). The \(k=0\) braid is empty.
+
+\textbf{Proof.} Assume the displayed braid holds at level \(k\). Write
+\(A'=A+B\), \(B'=B+xC\), \(C'=A'+C\) for the level-\(k+1\) polynomials,
+with new roots \(\alpha_i,\beta_i,\gamma_i\). For any polynomial with
+positive leading coefficient and only simple real roots,
+\(\operatorname{sgn}D(t)=(-1)^{n_D(t)}\) at a nonroot \(t\), where
+\(n_D(t)\) is the number of zeros of \(D\) strictly to the \emph{right}
+of \(t\). This rule replaces every informal assertion that signs
+``alternate''. All interval endpoints used below are \textbf{strictly
+negative} except the explicitly stated endpoint \(0\).
+
+\textbf{Even \(k=2s\ge2\) to odd \(k+1\).} At the ends of \((a_i,b_i)\),
+the values of \(A'=A+B\) have signs \((-1)^{s-i+1}\) and \((-1)^{s-i}\),
+respectively; hence \(a_i<\alpha_i<b_i\). At \(c_i\) and \(\alpha_i\),
+\(C'=A'+C\) has signs \((-1)^{s-i+1}\) and \((-1)^{s-i}\): at \(c_i\),
+both \(A(c_i)\) and \(B(c_i)\) have the indicated common sign, while at
+\(\alpha_i\), \(C'(\alpha_i)=C(\alpha_i)\). Hence
+\(c_i<\gamma_i<\alpha_i\).
+
+For \(B'=B+xC\):
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Interval
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Left endpoint sign
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Right endpoint sign
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(( -\infty,c_1)\) & \((-1)^{s+1}\) (leading term of \(xC\)) &
+\((-1)^s\), since \(B'(c_1)=B(c_1)\) \\
+\((b_{i-1},c_i)\), \(2\le i\le s\) & \((-1)^{s-i}\), since
+\(B'(b_{i-1})=b_{i-1}C(b_{i-1})\) & \((-1)^{s-i+1}\), since
+\(B'(c_i)=B(c_i)\) \\
+\((b_s,0)\) & negative, since \(b_sC(b_s)<0\) & positive, since
+\(B'(0)=B(0)>0\) \\
+\end{longtable}
+
+All signs differ, so \(B'\) has \(s+1\) distinct real roots in those
+disjoint intervals. The \(s\) roots of \(A'\), the \(s\) roots of
+\(C'\), and the \(s+1\) roots of \(B'\) exhaust their degrees; therefore
+there can be \textbf{no additional or repeated roots}. The following
+placements, retaining old roots as guideposts, are justified:
+
+\[
+ \beta_i<c_i<\gamma_i<\alpha_i<b_i<\beta_{i+1}\quad (1\le i\le s), \tag{4}
+\]
+
+where \(\beta_1<c_1\) and \(\beta_{s+1}<0\). Also \(c_i<a_i<\alpha_i\).
+\textbf{No relative order between \(a_i\) and \(\gamma_i\) is asserted
+or needed}. Deleting the old guideposts gives the odd braid.
+
+\textbf{Odd \(k=2s+1\) to even \(k+1\).} Here \(s\) may be zero. For
+\(A'=A+B\), the values at \(-\infty,b_1\) have signs
+\((-1)^{s+1},(-1)^s\). For \((a_{i-1},b_i)\), \(2\le i\le s+1\), their
+signs are \((-1)^{s+2-i},(-1)^{s+1-i}\). Thus \(\alpha_1<b_1\) and
+\(a_{i-1}<\alpha_i<b_i\) for \(2\le i\le s+1\).
+
+For \(B'\), at \((b_i,c_i)\) the signs are \((-1)^{s-i},(-1)^{s+1-i}\),
+because \(B'(b_i)=b_iC(b_i)\) and \(B'(c_i)=B(c_i)\). On
+\((b_{s+1},0)\), the signs are negative, positive. Hence
+\(b_i<\beta_i<c_i\) and \(b_{s+1}<\beta_{s+1}<0\).
+
+For \(C'=A'+C\), at \((-\infty,\alpha_1)\) the signs are
+\((-1)^{s+1},(-1)^s\). On \((c_{i-1},\alpha_i)\) (\(2\le i\le s+1\)) the
+signs are \((-1)^{s+2-i},(-1)^{s+1-i}\), because
+\(C'(c_{i-1})=A'(c_{i-1})\) and \(C'(\alpha_i)=C(\alpha_i)\). Thus
+\(\gamma_1<\alpha_1\) and \(c_{i-1}<\gamma_i<\alpha_i\). Again the
+disjoint sign-change intervals exactly match all three degrees \(s+1\),
+excluding further or multiple roots.
+
+The complete old-root guidepost chain contains
+
+\[
+ \gamma_i<\alpha_i<b_i<\beta_i<c_i<\gamma_{i+1}\quad (1\le i\le s),\qquad
+ \gamma_{s+1}<\alpha_{s+1}<b_{s+1}<\beta_{s+1}<0.\tag{5}
+\]
+
+Additionally, \(c_i<a_i<\alpha_{i+1}\) for \(1\le i\le s\). As in (4),
+no unproved relative order of old \(a_i\) and new \(\gamma_{i+1}\) is
+required. Deleting the guideposts yields the even braid. This proof
+includes \(s=0\): \(A_2=3+x\), \(B_2=1+4x\), \(C_2=6+x\), whose negative
+roots satisfy \(-6<-3<-1/4\). The induction is complete. \(\square\)
+
+\subsection{3. Precise transfer to T(q) for all q, with full guidepost
+chains}\label{precise-transfer-to-tq-for-all-q-with-full-guidepost-chains}
+
+\textbf{Hypothesis T(q).} The polynomials \(a,c\) have exactly \(d\)
+simple real roots and \(b\) has exactly \(d+e\) simple real roots, all
+nonpositive, with no common \(c\)-root. In increasing order:
+
+\begin{itemize}
+\tightlist
+\item
+  for odd \(q\):
+  \(c_1<a_1\le b_1<c_2<a_2\le b_2<\cdots<c_d<a_d\le b_d\);
+\item
+  for even \(q\), \(d\ge1\):
+  \(b_1<c_1<a_1\le b_2<c_2<a_2\le b_3<\cdots<b_d<c_d<a_d\le b_{d+1}\).
+\end{itemize}
+
+An equality is permitted \textbf{only at the final pair
+\(a_d=b_{d+e}=0\)}. For \(q=6\), \(d=0\), \(b\) has one simple negative
+root and \(a,c\) are nonzero constants.
+
+The normalizations in §1 and the definitions in §2 yield exactly:
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+Class & \(a\) & \(b\) & \(c\) & Valid for \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(q=3k\) & \(B_{k-2}\) & \(2B_{k-1}\) & \(C_{k-1}\) & \(k\ge2\) \\
+\(q=3k+1\) & \(xC_{k-2}\) & \(2xC_{k-1}\) & \(A_k\) & \(k\ge2\) \\
+\(q=3k+2\) & \(xA_{k-1}\) & \(2xA_k\) & \(B_k\) & \(k\ge1\) \\
+\end{longtable}
+
+\emph{Case \(q=3k\).} Set \(t=k-2\). If \(t\) is even \(2s\), the
+even-to-odd transition (4) gives for the relevant nonzero roots
+\(\beta_i<\gamma_i<b_i^{\rm old}<\beta_{i+1}\). They are respectively
+roots of \(b,c,a,b\), so this is the required \textbf{even-\(q\)} chain.
+If \(t\) is odd \(2s+1\), the odd-to-even transition (5) gives
+\(\gamma_i<b_i^{\rm old}<\beta_i<\gamma_{i+1}\), the \textbf{odd-\(q\)}
+chain. The \(t=0\) case is \(q=6\), already listed in §1.
+
+\emph{Case \(q=3k+2\).} Set \(t=k-1\). If \(t=2s\) is even, the
+even-to-odd transition gives
+\(\beta_i<a_i^{\rm old}<\alpha_i<\beta_{i+1}\) for \(1\le i\le s\), with
+\(\beta_{s+1}<0\). After appending the shared \(a,b\)-root at \(0\),
+this is the \textbf{odd-\(q\)} chain. If \(t=2s+1\) is odd, the
+odd-to-even transition gives
+\(\alpha_i<\beta_i<a_i^{\rm old}<\alpha_{i+1}\) for \(1\le i\le s\), and
+\(\alpha_{s+1}<\beta_{s+1}<0\). After appending the shared \(0\), this
+is the \textbf{even-\(q\)} chain. The \(s=0\) first case is \(q=5\), as
+in §1.
+
+\emph{Case \(q=3k+1\), requiring two transitions.} Set \(t=k-1\). Keep
+separate symbols throughout:
+
+\begin{itemize}
+\tightlist
+\item
+  \(o_i\) = roots of the \textbf{old} \(C_{t-1}\) (part of
+  \(a=xC_{t-1}\));
+\item
+  \(u_i\) = roots of the \textbf{middle} \(C_t\) (part of \(b=2xC_t\));
+\item
+  \(v_i,z_i\) = roots of the \textbf{middle} \(A_t,B_t\);
+\item
+  \(w_i\) = roots of the \textbf{new} \(A_{t+1}=A_t+B_t\) (equal to
+  \(c\)).
+\end{itemize}
+
+If \(t=2s\) is \textbf{even} (\(s\ge1\)), the old-to-middle odd-to-even
+transition (5) and the middle-to-new even-to-odd transition (4) give,
+for \(1\le i\le s-1\),
+
+\[
+ u_i<v_i<w_i<z_i<o_i<u_{i+1},\qquad u_s<v_s<w_s<z_s<0.
+ \tag{6}
+\]
+
+The first transition supplies \(z_i<o_i<u_{i+1}\); the second supplies
+\(v_i<w_i<z_i\). Therefore \(u_i<w_i<o_i<u_{i+1}\) with a final
+\(u_s<w_s<0\). The roots of \(a\) are \(o_1,\ldots,o_{s-1},0\); roots of
+\(b\) are \(u_1,\ldots,u_s,0\); roots of \(c\) are \(w_1,\ldots,w_s\).
+Hence this is exactly the \textbf{even-\(q\)} chain with \(d=s,e=1\).
+
+If \(t=2s+1\) is \textbf{odd} (\(s\ge0\)), the old-to-middle even-to-odd
+transition (4) and middle-to-new odd-to-even transition (5) give
+
+\[
+ w_1<z_1<o_1<u_1<v_1<w_2<z_2<o_2<u_2<v_2<\cdots<w_{s}<z_s<o_s<u_s<v_s<w_{s+1}<0.
+ \tag{7}
+\]
+
+Indeed the first transition supplies \(z_i<o_i<u_i<v_i<z_{i+1}\), while
+the second puts \(w_1<z_1\) and \(v_i<w_{i+1}<z_{i+1}\). Dropping the
+middle guideposts yields \(w_i<o_i<u_i<w_{i+1}\). The roots of \(a\) are
+\(o_1,\ldots,o_s,0\), the roots of \(b\) are \(u_1,\ldots,u_s,0\), and
+the roots of \(c\) are \(w_1,\ldots,w_{s+1}\). Thus this is the
+\textbf{odd-\(q\)} chain with \(d=s+1,e=0\). For \(s=0\), (7) is only
+\(w_1<0\), corresponding to \(q=7\) in §1.
+
+This covers all \(q\ge5\). In the classes \(q\equiv1,2\pmod3\), both
+\(a,b\) contain a single factor \(x\), while \(c(0)>0\), and all
+\emph{other} roots are negative and distinct. If \(q\equiv0\pmod3\),
+there is no shared \(a,b\)-zero. Therefore \textbf{T(q) holds for every
+\(q\ge5\)}, conditional only on the elementary braid proof in §2.
+\(\square\)
+
+\subsection{4. Full conditional root-counting proof from v0.8
+(integrated, not merely
+referenced)}\label{full-conditional-root-counting-proof-from-v0.8-integrated-not-merely-referenced}
+
+We now prove (2) assuming T(q), without requiring finite
+\(q\)-certificates. The braid in §§2--3 then supplies T(q) for all
+\(q\).
+
+\subsubsection{4.1. Rational functions and
+monotonicity}\label{rational-functions-and-monotonicity}
+
+Let \(d\ge1\) and set \(g=a/c\), \(h=b/c\) wherever \(c\ne0\). Since
+\(a,b,c\) have positive leading coefficients and their negative roots
+satisfy T(q), each simple pole \(c_i\) has the \textbf{strictly
+negative} residues
+
+\[
+ \frac{a(c_i)}{c'(c_i)}<0,\qquad \frac{b(c_i)}{c'(c_i)}<0.
+ \tag{8}
+\]
+
+For the odd chain, this follows by counting the \(d-i+1\) zeros of both
+\(a,b\) right of \(c_i\), versus \(d-i\) zeros right of the derivative
+sign of \(c\). For the even chain, \(b\) has \textbf{exactly \(i\) zeros
+to the left} of \(c_i\), namely \(b_1,\ldots,b_i\), and \(d+1-i\) zeros
+to the right of \(c_i\); \(a\) has \(d+1-i\) zeros right; again the
+signs differ from \(c'(c_i)\). Thus all relevant residues are negative.
+
+Partial fractions now give \(g'(x)>0\), \(h'(x)>0\) on every interval
+free of \(c\)-poles: the polynomial part of \(g\) is constant, and that
+of \(h\) is constant when \(e=0\) or affine with strictly positive slope
+when \(e=1\). Moreover every \emph{uncancelled} pole of \(a/b\) has
+strictly \textbf{positive} residue by the corresponding root order; its
+polynomial part is constant if \(e=0\), and zero if \(e=1\).
+Consequently
+
+\[
+ \bigl(a/b\bigr)'\le0\quad\text{wherever }b\ne0,
+ \tag{9}
+\]
+
+and it is strictly negative except when \(a/b\) is a constant rational
+function (when the derivative vanishes identically). No equality case is
+needed below. If \(a,b\) share the last root \(0\), the ratio \(a/b\) is
+extended through \(0\) by cancelling their common simple factor. This
+changes neither (9) nor any interval of interest. These observations are
+elementary rational-function facts, not assertions of a new interlacing
+theorem.
+
+For \(r\ge2\), at any \(c_i\), \(P_{q,r}(c_i)=a(c_i)^r\ne0\).
+For \(r=1\), equation (8) gives \((a(c_i)+b(c_i))/c'(c_i)<0\),
+so \(P_{q,1}(c_i)=a(c_i)+b(c_i)\ne0\) as well. Thus all real roots of
+\(P\) are precisely the zeros, away from poles, of
+
+\[
+ H_r(x)=\frac{P_{q,r}(x)}{c(x)^r}=g(x)^r+r h(x).
+ \tag{10}
+\]
+
+\subsubsection{\texorpdfstring{4.2. Odd \(r\): exactly \(d+e\) simple
+real
+roots}{4.2. Odd r: exactly d+e simple real roots}}\label{odd-r-exactly-de-simple-real-roots}
+
+For odd \(r\), \(r-1\) is even and
+
+\[
+ H_r'=r g^{r-1}g'+r h'>0
+\]
+
+on every pole interval (including \(r=1\)). Immediately to the
+\textbf{right} of each \(c_i\), both \(g,h\to-\infty\); immediately to
+the \textbf{left} of \(c_{i+1}\), both \(g,h\to+\infty\). Hence there is
+one simple root of \(H_r\) in each of the \(d-1\) bounded pole
+intervals. The rightmost interval \((c_d,+\infty)\) contributes exactly
+one more root: the left endpoint gives \(-\infty\), while at \(+\infty\)
+both \(g\) and \(h\) have positive limiting value (or \(h\to+\infty\) if
+\(e=1\)).
+
+If \(e=0\), the far-left interval \((-\infty,c_1)\) has \(g,h>0\)
+throughout, so it contributes no root. If \(e=1\), \(g>0\) throughout
+it; \(h(x)\to-\infty\) as \(x\to-\infty\), while \(H_r\to+\infty\) as
+\(x\to c_1^-\). Strict monotonicity gives exactly one additional simple
+root. Thus the total is \((d-1)+1+e=d+e\) distinct simple real roots.
+When \(a=b=0\), the only permitted common root is \(x=0\), which lies in
+the \textbf{rightmost pole interval} \((c_d,+\infty)\). In that
+interval, strict monotonicity of \(H_r\) already counts \(0\) as its
+unique root; it is \textbf{not} counted as an extra root.
+
+\subsubsection{\texorpdfstring{4.3. Even \(r\): exactly \(2d+e\) simple
+real
+roots}{4.3. Even r: exactly 2d+e simple real roots}}\label{even-r-exactly-2de-simple-real-roots}
+
+Here \(r\ge2\). On each interval beginning at \(c_i\), let
+\(\tilde b_i=b_{i+e}\) be the \(b\)-root after the corresponding
+\(a_i\); the order is \(c_i<a_i\le\tilde b_i\), followed by \(c_{i+1}\)
+(or \(+\infty\) for \(i=d\)). On \((c_i,a_i)\), both \(g,h<0\), and
+equation (10) is equivalent to
+
+\[
+ (-g)^{r-1}\,(a/b)=r. \tag{11}
+\]
+
+As \(x\) increases, \(-g(x)>0\) strictly decreases and \(a/b>0\) is
+nonincreasing by (9). Thus the left side is \textbf{strictly
+decreasing}. Its limit at \(c_i^+\) is \(+\infty\), and its limit at
+\(a_i^-\) is \(0\). This remains true when \(a_i=\tilde b_i=0\):
+cancellation makes \(a/b\) approach a finite positive limit while
+\(-g\to0\). Therefore precisely one simple zero lies in \((c_i,a_i)\).
+
+If \(a_i<\tilde b_i\), then on \((a_i,\tilde b_i)\), \(g>0,h<0\) and
+\(H_r'>0\). The endpoint signs are \(H_r(a_i)=r h(a_i)<0\) and
+\(H_r(\tilde b_i)=g(\tilde b_i)^r>0\); hence there is precisely one
+additional simple zero. If instead \(a_i=\tilde b_i=0\) (permitted only
+for the last pair), then \(P(0)=0\) and this root is \textbf{simple}:
+for even \(r\ge2\), since \(b'(0)>0,c(0)>0\),
+
+\[
+ P'(0)=r b'(0)c(0)^{r-1}>0.
+\]
+
+For \(r=1\), which belongs to §4.2, \(P'(0)=a'(0)+b'(0)>0\). Neither
+case creates a repeated real root. Beyond \(\tilde b_i\) and before the
+next pole, or to \(+\infty\), both \(g,h>0\), hence there are no further
+roots. The \(d\) right-of-pole intervals therefore give \textbf{exactly
+two} simple real roots each.
+
+If \(e=0\), the far-left interval contributes none since \(g,h>0\). If
+\(e=1\), there is exactly one additional root there: \(g>0\), so
+\(H_r'>0\), with \(H_r(-\infty)=-\infty\) (\(h\) has positive linear
+coefficient) and \(H_r(c_1^-)=+\infty\). Thus \(P\) has precisely
+\(2d+e\) distinct simple real roots.
+
+\subsubsection{\texorpdfstring{4.4. The \(d=0\) exception and algebraic
+multiplicity}{4.4. The d=0 exception and algebraic multiplicity}}\label{the-d0-exception-and-algebraic-multiplicity}
+
+The only \(q\ge5\) with \(d=0\) is \(q=6\). Here \(a=1\), \(b=2(x+1)\),
+\(c=3\), so
+
+\[
+ P_{6,r}(x)=1+2r3^{r-1}(x+1),
+\]
+
+which has exactly one simple real root for every \(r\). This equals
+\(d+e=2d+e=1\).
+
+For all \(q\), \(\deg P=rd+e\). Subtracting the real-root counts gives
+
+\[
+ \begin{cases}
+ (r-1)d,&r\text{ odd},\\
+ (r-2)d,&r\text{ even},
+ \end{cases}
+ =2d\lfloor(r-1)/2\rfloor.
+\]
+
+All counted real roots of \(P\) are simple. Multiplication by \(x^{mr}\)
+adds only the real root \(0\), possibly with higher multiplicity, and
+changes no nonreal-root count. Finally, \(d=0\) only when \(q=6\), while
+\(d>0\) for all other \(q\ge5\). Equation (2) and the real-rootedness
+criterion follow. \(\square\)
+
+\subsection{5. What this proof does and does not establish}\label{what-this-proof-does-and-does-not-establish}
+\begin{enumerate}
+\tightlist
+\item The proof chain is the three-residue braid sign induction, transfer to T(q), and the full rational-function root count. The q=3k+1 transfer, \(r=1\), \(q=6\), shared zero and far-left intervals are explicit.
+\item Version 1.0 follows the adopted v0.14 source. Relative to v0.13, v0.14 corrects the Section 4.1 statement at a c-root: the equality \(P(c_i)=a(c_i)^r\) is restricted to \(r\ge2\); for \(r=1\), (8) instead establishes \(a(c_i)+b(c_i)\ne0\). The general nonreal-root formula is unchanged. The complete audit parents remain unchanged in the private provenance record. The public reproduction package contains unchanged programs and mathematical certificate data, with hashes and source origins in \texttt{SOURCE\_PROVENANCE.json}; raw execution/review logs and private audit archives are excluded.
+\item A separate AI reviewer reported mathematical-delta PASS for v0.14, including the \(r=1\) correction and its connection to Sections 4.2--4.3. That assessment is attributed to the author-supplied review. Finite checks do not certify the all-q analytical induction. Human peer review and formal verification have not been performed.
+\item Novelty assessment: inconclusive; full-text comparison with Burnham--Erey (2025) incomplete. The general cut-vertex decomposition method is not claimed as new. The bibliography and earlier limited literature review are inherited from the audited source. See \texttt{PRIOR\_ART.md}. No uniqueness, priority or first-discovery claim is made.
+\item Copyright (c) 2026 Ryutaro Yonezu. All rights reserved. No Creative Commons or open-source reuse license is granted. Public accessibility does not grant reuse permission.
+\end{enumerate}
+
+\subsection{References (editorially added in
+v0.12)}\label{references-editorially-added-in-v0.12}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  M. Drmota, L. Ramos, C. Requilé and J. Rué, \emph{Maximal Independent
+  Sets and Maximal Matchings in Series-Parallel and Related Graph
+  Classes}, Electronic Journal of Combinatorics \textbf{27}(1) (2020),
+  P1.5. DOI: https://doi.org/10.37236/8683 . Established rooted-state
+  and block-stable decomposition framework; the general method is not
+  claimed new.
+\item
+  M. Burnham and A. Erey, \emph{On the roots of maximal matching
+  polynomials}, Discrete Mathematics \textbf{348}(9) (2025), 114547.
+  DOI: https://doi.org/10.1016/j.disc.2025.114547 . Publisher
+  bibliography (348(9), 114547, DOI) corroborated by Aysel Erey's public
+  publication list; abstract/introduction/section synopsis inspected,
+  but complete theorem text/PDF has \textbf{not} been independently
+  checked.
+\item
+  S. Jahari and S. Alikhani, \emph{On the independent domination
+  polynomial of a graph}, arXiv:1808.07369 (2018),
+  https://arxiv.org/abs/1808.07369 . Studies independent domination of
+  the original generalized friendship graph, not automatically its line
+  graph; indirect related work, not a confirmed duplicate.
+\end{enumerate}
+
+\end{document}
